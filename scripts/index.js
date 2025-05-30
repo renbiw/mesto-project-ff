@@ -11,7 +11,7 @@ function createCard(card, deleteHandler) {
   cardNew.querySelector(".card__description").querySelector(".card__title").textContent = card.name;
 
   const buttonDelete = cardNew.querySelector(".card__delete-button");
-  buttonDelete.addEventListener("click", () => deleteCard(cardNew, deleteHandler));
+  buttonDelete.addEventListener("click", () => deleteHandler(cardNew));
 
   return cardNew;
 }
