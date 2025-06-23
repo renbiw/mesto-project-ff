@@ -1,0 +1,25 @@
+{
+  "name": "yandex_praktikum",
+  "version": "0.0.1",
+  "description": "https://github.com/renbiw/mesto-project-ff.git",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/renbiw/mesto-project-ff.git"
+  },
+  "author": "Stas Basov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/renbiw/mesto-project-ff/issues"
+  },
+  "homepage": "https://github.com/renbiw/mesto-project-ff#readme",
+  "devDependencies": {
+    "webpack": "^5.99.9",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2"
+  }
+}
