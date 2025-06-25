@@ -1,20 +1,30 @@
-import './pages/index.css';
-import {initialCards} from './scripts/cards.js';
-import {createCard, deleteCard, imageLiked} from './components/card.js';
-import {closeForm, openForm, openCardImg, handleEscKey} from './components/modal.js';
+import "./pages/index.css";
+import { initialCards } from "./scripts/cards.js";
+import { createCard, deleteCard, imageLiked } from "./components/card.js";
+import {
+  closeForm,
+  openForm,
+  openCardImg,
+  handleEscKey,
+  handleClickOverlay
+} from "./components/modal.js";
 
 // @todo: DOM узлы
-const buttonEdit = document.querySelector('.profile__edit-button');
-const buttonAdd = document.querySelector('.profile__add-button');
-const buttonClose = document.querySelectorAll('.popup__close');
+const buttonEdit = document.querySelector(".profile__edit-button");
+const buttonAdd = document.querySelector(".profile__add-button");
+const buttonClose = document.querySelectorAll(".popup__close");
 
-const popupEdit = document.querySelector('.popup_type_edit');
-const popupNewCard = document.querySelector('.popup_type_new-card');
+const popupEdit = document.querySelector(".popup_type_edit");
+const popupNewCard = document.querySelector(".popup_type_new-card");
+export const popupImage = document.querySelector(".popup_type_image");
 
-const overlay = document.querySelector('.page__content');
+const overlay = document.querySelector(".page__content");
 
-const profileName = document.querySelector('.profile__title');
-const profileDescrip = document.querySelector('.profile__description');
+const profileName = document.querySelector(".profile__title");
+const profileDescrip = document.querySelector(".profile__description");
+
+// @todo: Темплейт карточки
+export const cardTemplate = document.querySelector("#card-template").content;
 
 // @todo: Вывести карточки на страницу
 const cardsList = document.querySelector(".places__list");
@@ -23,42 +33,38 @@ for (let i = 0; i < initialCards.length; i++) {
 }
 
 //слушатель списку изображений на кнопку лайк
-cardsList.addEventListener('click', imageLiked)
-
+cardsList.addEventListener("click", imageLiked);
 
 //открытие формы редактирования профиля, инпуты заполняются данными профиля
-buttonEdit.addEventListener('click', function(evt){
+buttonEdit.addEventListener("click", function (evt) {
   document.forms.editprofile.name.value = profileName.innerText;
   document.forms.editprofile.description.value = profileDescrip.innerText;
   openForm(popupEdit);
 });
 
-buttonAdd.addEventListener('click', function(evt){
+buttonAdd.addEventListener("click", function (evt) {
   openForm(popupNewCard);
 });
 
 // цикл чтобы закрепить за каждой картой обработчик "фулвьюв"
-const cardImage = document.querySelectorAll('.card__image');
-cardImage.forEach(img => {
-  img.addEventListener('click', openCardImg);
+const cardImage = document.querySelectorAll(".card__image");
+cardImage.forEach((img) => {
+  img.addEventListener("click", openCardImg);
 });
 
-buttonClose.forEach(button => {
-  button.addEventListener('click', closeForm);
+buttonClose.forEach((button) => {
+  button.addEventListener("click", closeForm);
 });
 
 // обработчик закрытия форм по клику на оверлей
-overlay.addEventListener('click', function(evt){
-  if (!evt.target.classList.contains('popap')){
-   closeForm(evt);
- }
-});
-
+overlay.addEventListener("click", handleClickOverlay);
 
 //submit формы редактирования
-const formElement = document.querySelector('.popup_type_edit').querySelector('.popup__form'); 
-const nameInput = formElement.querySelector('.popup__input_type_name');
-const jobInput = formElement.querySelector('.popup__input_type_description');
+const formElement = document
+  .querySelector(".popup_type_edit")
+  .querySelector(".popup__form");
+const nameInput = formElement.querySelector(".popup__input_type_name");
+const jobInput = formElement.querySelector(".popup__input_type_description");
 
 // редактирование профиля
 function handleFormSubmit(evt) {
@@ -69,25 +75,28 @@ function handleFormSubmit(evt) {
 }
 
 //прикрепляем обработчик к форме
-formElement.addEventListener('submit', handleFormSubmit);
+formElement.addEventListener("submit", handleFormSubmit);
 
-
-// submit формы создания 
-const formCard = document.querySelector('.popup_type_new-card').querySelector('.popup__form'); 
+// submit формы создания
+const formCard = document
+  .querySelector(".popup_type_new-card")
+  .querySelector(".popup__form");
 let cardForm = {};
 
-// обработчик создания новых карточек 
+// обработчик создания новых карточек
 function handleNewCard(evt) {
-  evt.preventDefault(); 
-  cardForm.name = formCard.querySelector('.popup__input_type_card-name').value;
-  cardForm.link = formCard.querySelector('.popup__input_type_url').value;
+  evt.preventDefault();
+  cardForm.name = formCard.querySelector(".popup__input_type_card-name").value;
+  cardForm.link = formCard.querySelector(".popup__input_type_url").value;
   cardsList.prepend(createCard(cardForm, deleteCard));
-  cardsList.querySelector('.card__image').addEventListener('click', openCardImg); //слушатель чтобы добавленные картинки открывались
+  cardsList
+    .querySelector(".card__image")
+    .addEventListener("click", openCardImg); //слушатель чтобы добавленные картинки открывались
   // Очистка инпутов
-  formCard.querySelector('.popup__input_type_card-name').value = '';
-  formCard.querySelector('.popup__input_type_url').value = '';
+  formCard.querySelector(".popup__input_type_card-name").value = "";
+  formCard.querySelector(".popup__input_type_url").value = "";
   closeForm(evt);
 }
 
 // Прикрепляем обработчик к форме
-formCard.addEventListener('submit', handleNewCard);
+formCard.addEventListener("submit", handleNewCard);
