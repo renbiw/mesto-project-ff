@@ -2,12 +2,12 @@ import "./pages/index.css";
 import { initialCards } from "./scripts/cards.js";
 import { createCard, deleteCard, imageLiked } from "./components/card.js";
 import {
-  closeForm,
-  openForm,
-  openCardImg,
+  closeModal,
+  openModal,
   handleEscKey,
-  handleClickOverlay
+  handleClickOverlay,
 } from "./components/modal.js";
+import { DataCardImg } from "./components/modal-img.js";
 
 // @todo: DOM узлы
 const buttonEdit = document.querySelector(".profile__edit-button");
@@ -16,66 +16,62 @@ const buttonClose = document.querySelectorAll(".popup__close");
 
 const popupEdit = document.querySelector(".popup_type_edit");
 const popupNewCard = document.querySelector(".popup_type_new-card");
-export const popupImage = document.querySelector(".popup_type_image");
+const popupImage = document.querySelector(".popup_type_image");
 
 const overlay = document.querySelector(".page__content");
 
 const profileName = document.querySelector(".profile__title");
 const profileDescrip = document.querySelector(".profile__description");
 
-// @todo: Темплейт карточки
-export const cardTemplate = document.querySelector("#card-template").content;
-
 // @todo: Вывести карточки на страницу
 const cardsList = document.querySelector(".places__list");
-for (let i = 0; i < initialCards.length; i++) {
-  cardsList.append(createCard(initialCards[i], deleteCard));
-}
-
-//слушатель списку изображений на кнопку лайк
-cardsList.addEventListener("click", imageLiked);
+initialCards.forEach((card) => {
+  cardsList.append(createCard(card, deleteCard, DataCardImg, imageLiked));
+});
 
 //открытие формы редактирования профиля, инпуты заполняются данными профиля
 buttonEdit.addEventListener("click", function (evt) {
-  document.forms.editprofile.name.value = profileName.innerText;
-  document.forms.editprofile.description.value = profileDescrip.innerText;
-  openForm(popupEdit);
+  document.forms.editprofile.name.value = profileName.textContent;
+  document.forms.editprofile.description.value = profileDescrip.textContent;
+  openModal(popupEdit);
 });
 
 buttonAdd.addEventListener("click", function (evt) {
-  openForm(popupNewCard);
+  openModal(popupNewCard);
 });
 
-// цикл чтобы закрепить за каждой картой обработчик "фулвьюв"
-const cardImage = document.querySelectorAll(".card__image");
-cardImage.forEach((img) => {
-  img.addEventListener("click", openCardImg);
+// открытие карточек по клику
+const cardImg = document.querySelectorAll(".card__image");
+cardImg.forEach((img) => {
+  img.addEventListener("click", (evt) => {
+    openModal(popupImage);
+  });
 });
 
 buttonClose.forEach((button) => {
-  button.addEventListener("click", closeForm);
+  button.addEventListener("click", closeModal);
 });
 
 // обработчик закрытия форм по клику на оверлей
 overlay.addEventListener("click", handleClickOverlay);
 
 //submit формы редактирования
-const formElement = document
+const formEdit = document
   .querySelector(".popup_type_edit")
   .querySelector(".popup__form");
-const nameInput = formElement.querySelector(".popup__input_type_name");
-const jobInput = formElement.querySelector(".popup__input_type_description");
+const nameInput = formEdit.querySelector(".popup__input_type_name");
+const jobInput = formEdit.querySelector(".popup__input_type_description");
 
 // редактирование профиля
-function handleFormSubmit(evt) {
+function handleFormEdit(evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileDescrip.textContent = jobInput.value;
-  closeForm(evt);
+  closeModal(evt);
 }
 
 //прикрепляем обработчик к форме
-formElement.addEventListener("submit", handleFormSubmit);
+formEdit.addEventListener("submit", handleFormEdit);
 
 // submit формы создания
 const formCard = document
@@ -88,14 +84,18 @@ function handleNewCard(evt) {
   evt.preventDefault();
   cardForm.name = formCard.querySelector(".popup__input_type_card-name").value;
   cardForm.link = formCard.querySelector(".popup__input_type_url").value;
-  cardsList.prepend(createCard(cardForm, deleteCard));
-  cardsList
-    .querySelector(".card__image")
-    .addEventListener("click", openCardImg); //слушатель чтобы добавленные картинки открывались
+  const cardModal = createCard(cardForm, deleteCard);
+  cardsList.prepend(cardModal);
+  cardModal
+    .querySelector(".card__like-button")
+    .addEventListener("click", imageLiked);
+  cardModal.querySelector(".card__image").addEventListener("click", (evt) => {
+    DataCardImg(evt);
+    openModal(popupImage);
+  });
   // Очистка инпутов
-  formCard.querySelector(".popup__input_type_card-name").value = "";
-  formCard.querySelector(".popup__input_type_url").value = "";
-  closeForm(evt);
+  formCard.reset();
+  closeModal(evt);
 }
 
 // Прикрепляем обработчик к форме
