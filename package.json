@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/renbiw/mesto-project-ff#readme",
   "devDependencies": {
+    "@babel/core": "^7.27.7",
+    "@babel/preset-env": "^7.27.2",
     "autoprefixer": "^10.4.21",
+    "babel-loader": "^10.0.0",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^7.1.2",
     "cssnano": "^7.0.7",
@@ -28,5 +31,8 @@
     "webpack": "^5.99.9",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.2"
+  },
+  "dependencies": {
+    "core-js": "^3.43.0"
   }
 }
