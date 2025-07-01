@@ -7,7 +7,6 @@ import {
   handleEscKey,
   handleClickOverlay,
 } from "./components/modal.js";
-import { DataCardImg } from "./components/modal-img.js";
 
 // @todo: DOM узлы
 const buttonEdit = document.querySelector(".profile__edit-button");
@@ -18,7 +17,8 @@ const popupEdit = document.querySelector(".popup_type_edit");
 const popupNewCard = document.querySelector(".popup_type_new-card");
 const popupImage = document.querySelector(".popup_type_image");
 
-const overlay = document.querySelector(".page__content");
+const imageOpen = popupImage.querySelector(".popup__image");
+const imageName = popupImage.querySelector(".popup__caption");
 
 const profileName = document.querySelector(".profile__title");
 const profileDescrip = document.querySelector(".profile__description");
@@ -26,7 +26,7 @@ const profileDescrip = document.querySelector(".profile__description");
 // @todo: Вывести карточки на страницу
 const cardsList = document.querySelector(".places__list");
 initialCards.forEach((card) => {
-  cardsList.append(createCard(card, deleteCard, DataCardImg, imageLiked));
+  cardsList.append(createCard(card, deleteCard, dataCardImg, imageLiked));
 });
 
 //открытие формы редактирования профиля, инпуты заполняются данными профиля
@@ -36,24 +36,29 @@ buttonEdit.addEventListener("click", function (evt) {
   openModal(popupEdit);
 });
 
+// попап фулвью заполняется данными изображения по клику, открытие попапа
+function dataCardImg(img) {
+  imageOpen.alt = img.alt;
+  imageOpen.src = img.src;
+  imageName.textContent = img.alt.slice(7);
+  openModal(popupImage);
+}
+
 buttonAdd.addEventListener("click", function (evt) {
   openModal(popupNewCard);
 });
 
-// открытие карточек по клику
-const cardImg = document.querySelectorAll(".card__image");
-cardImg.forEach((img) => {
-  img.addEventListener("click", (evt) => {
-    openModal(popupImage);
+buttonClose.forEach((button) => {
+  button.addEventListener("click",  (evt) => {
+    const popup = evt.target.closest(".popup");
+    closeModal(popup);
   });
 });
 
-buttonClose.forEach((button) => {
-  button.addEventListener("click", closeModal);
-});
-
 // обработчик закрытия форм по клику на оверлей
-overlay.addEventListener("click", handleClickOverlay);
+popupEdit.addEventListener("click", handleClickOverlay);
+popupNewCard.addEventListener("click", handleClickOverlay);
+popupImage.addEventListener("click", handleClickOverlay);
 
 //submit формы редактирования
 const formEdit = document
@@ -67,7 +72,7 @@ function handleFormEdit(evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileDescrip.textContent = jobInput.value;
-  closeModal(evt);
+  closeModal(popupEdit);
 }
 
 //прикрепляем обработчик к форме
@@ -84,18 +89,11 @@ function handleNewCard(evt) {
   evt.preventDefault();
   cardForm.name = formCard.querySelector(".popup__input_type_card-name").value;
   cardForm.link = formCard.querySelector(".popup__input_type_url").value;
-  const cardModal = createCard(cardForm, deleteCard);
+  const cardModal = createCard(cardForm, deleteCard, dataCardImg, imageLiked);
   cardsList.prepend(cardModal);
-  cardModal
-    .querySelector(".card__like-button")
-    .addEventListener("click", imageLiked);
-  cardModal.querySelector(".card__image").addEventListener("click", (evt) => {
-    DataCardImg(evt);
-    openModal(popupImage);
-  });
   // Очистка инпутов
   formCard.reset();
-  closeModal(evt);
+  closeModal(popupNewCard);
 }
 
 // Прикрепляем обработчик к форме
