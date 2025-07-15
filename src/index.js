@@ -7,6 +7,7 @@ import {
   handleEscKey,
   handleClickOverlay,
 } from "./components/modal.js";
+import { enableValidation, clearValidation} from "./components/validation.js";
 
 // @todo: DOM узлы
 const buttonEdit = document.querySelector(".profile__edit-button");
@@ -98,3 +99,13 @@ function handleNewCard(evt) {
 
 // Прикрепляем обработчик к форме
 formCard.addEventListener("submit", handleNewCard);
+
+
+enableValidation({
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+}); 
