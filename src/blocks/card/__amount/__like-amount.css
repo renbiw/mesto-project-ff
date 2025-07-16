@@ -1,0 +1,6 @@
+.card__like-amount {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 1);
+  font-weight: 400;
+  align-self: center;
+}
