@@ -21,7 +21,7 @@
   }
 }
 
-.popup__input + .popup__error_visible {
+.popup__input:has(+ .popup__error_visible) {
   border-bottom: 1px solid rgba(255, 0, 0, 1);
 }
 

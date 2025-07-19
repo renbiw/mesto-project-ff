@@ -37,10 +37,10 @@
     <div class="popup__content">
       <button type="button" class="popup__close"></button>
       <h3 class="popup__title">Редактировать профиль</h3>
-      <form class="popup__form" name="editprofile">
+      <form class="popup__form" name="editprofile" novalidate>
         <input type="text" id="input__name" name="name" class="popup__input popup__input_type_name" placeholder="Имя" minlength="2" maxlength="40" pattern="^[a-zA-Zа-яА-ЯЁё\s\-]+$" data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" required>
         <span class="input__name-error popup__input-error"></span>
-        <input type="text" id="input__description" name="description" class="popup__input popup__input_type_description" placeholder="Занятие" minlength="2" maxlength="200" pattern="^[a-zA-Zа-яА-ЯЁё\s\-]+$" data-error-message="Вы пропустили это поле." required>
+        <input type="text" id="input__description" name="description" class="popup__input popup__input_type_description" placeholder="Занятие" minlength="2" maxlength="200" required>
         <span class="input__description-error popup__input-error"></span>
         <button type="submit" class="button popup__button">Сохранить</button>
       </form>
@@ -50,10 +50,10 @@
     <div class="popup__content">
       <button type="button" class="popup__close"></button>
       <h3 class="popup__title">Новое место</h3>
-      <form class="popup__form" name="new-place">
+      <form class="popup__form" name="new-place" novalidate>
         <input type="text" id="input__placename" name="place-name" class="popup__input popup__input_type_card-name" placeholder="Название" minlength="2" maxlength="30" pattern="^[a-zA-Zа-яА-ЯЁё\s\-]+$" data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" required>
         <span class="input__placename-error popup__input-error"></span>
-        <input type="url" id="input__link" name="link" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" pattern="^((https?|ftp):\/\/)?([\\w.-]+)(\.[\\w.-]+)+([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?$" data-error-message="Введите адрес сайта." required>
+        <input type="url" id="input__link" name="link" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" required>
         <span class="input__link-error popup__input-error"></span>
         <button type="submit" class="button popup__button">Сохранить</button>
       </form>
@@ -66,13 +66,24 @@
       <p class="popup__caption"></p>
     </div>
   </div>
+  <div class="popup popup_type_avatar popup_is-animated">
+    <div class="popup__content popup__content_avatar">
+      <button type="button" class="popup__close"></button>
+      <h3 class="popup__title">Обновить аватар</h3>
+      <form class="popup__form" name="new-avatar" novalidate>
+        <input type="text" id="input__avatarlink" name="avatar-link" class="popup__input popup__input_type_avatar-link" placeholder="Ссылка на картинку" required>
+        <span class="input__avatarlink-error popup__input-error"></span>
+        <button type="submit" class="button popup__button">Сохранить</button>
+      </form>
+    </div>
+  </div>
 </div>
 <!--<script src="./scripts/cards.js"></script>
 <script src="./scripts/index.js" defer></script>-->
 
 <template id="card-template">
   <li class="places__item card">
-    <img class="card__image" src="" alt="" />
+    <img class="card__image" src="" alt=""/>
     <button type="button" class="card__delete-button"></button>
     <div class="card__description">
       <h2 class="card__title">
