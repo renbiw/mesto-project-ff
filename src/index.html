@@ -40,7 +40,7 @@
       <form class="popup__form" name="editprofile" novalidate>
         <input type="text" id="input__name" name="name" class="popup__input popup__input_type_name" placeholder="Имя" minlength="2" maxlength="40" pattern="^[a-zA-Zа-яА-ЯЁё\s\-]+$" data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" required>
         <span class="input__name-error popup__input-error"></span>
-        <input type="text" id="input__description" name="description" class="popup__input popup__input_type_description" placeholder="Занятие" minlength="2" maxlength="200" required>
+        <input type="text" id="input__description" name="description" class="popup__input popup__input_type_description" placeholder="Занятие" minlength="2" maxlength="200" pattern="^[a-zA-Zа-яА-ЯЁё\s\-]+$" data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы" required>
         <span class="input__description-error popup__input-error"></span>
         <button type="submit" class="button popup__button">Сохранить</button>
       </form>
@@ -71,7 +71,7 @@
       <button type="button" class="popup__close"></button>
       <h3 class="popup__title">Обновить аватар</h3>
       <form class="popup__form" name="new-avatar" novalidate>
-        <input type="text" id="input__avatarlink" name="avatar-link" class="popup__input popup__input_type_avatar-link" placeholder="Ссылка на картинку" required>
+        <input type="url" id="input__avatarlink" name="avatar-link" class="popup__input popup__input_type_avatar-link" placeholder="Ссылка на картинку" required>
         <span class="input__avatarlink-error popup__input-error"></span>
         <button type="submit" class="button popup__button">Сохранить</button>
       </form>

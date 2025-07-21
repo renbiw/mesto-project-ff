@@ -18,8 +18,12 @@ export function handleEscKey(evt) {
     const popup = document.querySelector(".popup_is-opened"); 
     if (popup) {
       closeModal(popup); 
+
+      const form = popup.querySelector('.popup__form');
+      return form;
     }
   }
+  return null;
 }
 
 // обработчик клика на оверлей
