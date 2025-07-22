@@ -73,6 +73,7 @@ export function showInputError(
 export function hideInputError(formElement, inputElement, config) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.remove(config.inputErrorClass);
+  inputElement.setCustomValidity("");
   errorElement.classList.remove(config.errorClass);
   errorElement.textContent = "";
 }

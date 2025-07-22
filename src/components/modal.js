@@ -12,18 +12,14 @@ export function openModal(openPop) {
 }
 
 // обработчик закрытия форм по клавише esc
-export function handleEscKey(evt) {
+function handleEscKey(evt) {
   if (evt.key === "Escape") {
     evt.preventDefault();
     const popup = document.querySelector(".popup_is-opened"); 
     if (popup) {
       closeModal(popup); 
-
-      const form = popup.querySelector('.popup__form');
-      return form;
     }
   }
-  return null;
 }
 
 // обработчик клика на оверлей
